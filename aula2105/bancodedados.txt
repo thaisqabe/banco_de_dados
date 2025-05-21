@@ -1,0 +1,374 @@
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| etecmcm2           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use etecmcm2
+Database changed
+MariaDB [etecmcm2]> show tables;
++--------------------+
+| Tables_in_etecmcm2 |
++--------------------+
+| categorias         |
+| produtos           |
++--------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> describe produtos;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| id_produto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nome         | varchar(255)  | YES  |     | NULL    |                |
+| preco        | decimal(10,2) | YES  |     | NULL    |                |
+| quant        | int(11)       | YES  |     | NULL    |                |
+| marca        | varchar(255)  | YES  |     | NULL    |                |
+| id_categoria | int(11)       | YES  | MUL | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.014 sec)
+
+MariaDB [etecmcm2]> alter table produtos add unidade_medida varchar(10);
+Query OK, 0 rows affected (0.022 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [etecmcm2]> describe produtos;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| id_produto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(255)  | YES  |     | NULL    |                |
+| preco          | decimal(10,2) | YES  |     | NULL    |                |
+| quant          | int(11)       | YES  |     | NULL    |                |
+| marca          | varchar(255)  | YES  |     | NULL    |                |
+| id_categoria   | int(11)       | YES  | MUL | NULL    |                |
+| unidade_medida | varchar(10)   | YES  |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.025 sec)
+
+MariaDB [etecmcm2]> select * from produtos;
++------------+------------------+---------+-------+------------+--------------+----------------+
+| id_produto | nome             | preco   | quant | marca      | id_categoria | unidade_medida |
++------------+------------------+---------+-------+------------+--------------+----------------+
+|          1 | Escova de dentes |   12.00 |   100 | Colgate    |            2 | NULL           |
+|          2 | Sabão em pó      |   30.50 |    50 | OMO        |            3 | NULL           |
+|          3 | Detergente       |    3.55 |    10 | Ypê        |            3 | NULL           |
+|          4 | Iogurte          |   19.99 |    40 | Itambé     |            1 | NULL           |
+|          5 | Manteiga         |   30.50 |    80 | Batavo     |            1 | NULL           |
+|          6 | Creme dental     |   29.99 |    80 | Sorriso    |            2 | NULL           |
+|          7 | Milho verde      |   19.50 |   100 | Quero      |            4 | NULL           |
+|          8 | Ervilha          |   15.50 |    90 | Quero      |            4 | NULL           |
+|          9 | Presunto         |   14.98 |    90 | Perdigão   |            5 | NULL           |
+|         10 | Mortadela        |   10.90 |    74 | Sadia      |            5 | NULL           |
+|         11 | Costela bovina   |   40.99 |    30 | Friboi     |            6 | NULL           |
+|         12 | Asa de Frango    |   45.70 |    45 | Swift      |            6 | NULL           |
+|         13 | Celular          | 1200.89 |    15 | Samsung    |            8 | NULL           |
+|         14 | Fone de ouvido   |   70.67 |    37 | Motorola   |            8 | NULL           |
+|         15 | Pão francês      |    3.77 |    50 | Superpan   |            9 | NULL           |
+|         16 | Sanduíche        |   15.99 |    20 | Superpan   |            9 | NULL           |
+|         17 | EGEO             |  200.89 |    20 | Oboticário |           10 | NULL           |
+|         18 | Lily             | 1000.89 |    10 | Oboticário |           10 | NULL           |
+|         19 | Refrigerante     |   16.50 |   100 | Coca-cola  |           11 | NULL           |
+|         20 | Suco de uva      |   20.50 |   100 | Maratá     |           11 | NULL           |
++------------+------------------+---------+-------+------------+--------------+----------------+
+20 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "kg" where id_categoria = 5;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "kg" where id_categoria = 6;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "un" where id_categoria = 2 or id_categoria = 3 or id_categoria = 8 ;
+Query OK, 6 rows affected (0.011 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "kg" where id_categoria = 1;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "g" where id_categoria =4 ;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "un" where id_categoria =9 ;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "l" where id_categoria =11 ;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> update produtos set unidade_medida = "un" where id_categoria =10 ;
+Query OK, 2 rows affected (0.011 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [etecmcm2]> select * from produtos
+    -> ;
++------------+------------------+---------+-------+------------+--------------+----------------+
+| id_produto | nome             | preco   | quant | marca      | id_categoria | unidade_medida |
++------------+------------------+---------+-------+------------+--------------+----------------+
+|          1 | Escova de dentes |   12.00 |   100 | Colgate    |            2 | un             |
+|          2 | Sabão em pó      |   30.50 |    50 | OMO        |            3 | un             |
+|          3 | Detergente       |    3.55 |    10 | Ypê        |            3 | un             |
+|          4 | Iogurte          |   19.99 |    40 | Itambé     |            1 | kg             |
+|          5 | Manteiga         |   30.50 |    80 | Batavo     |            1 | kg             |
+|          6 | Creme dental     |   29.99 |    80 | Sorriso    |            2 | un             |
+|          7 | Milho verde      |   19.50 |   100 | Quero      |            4 | g              |
+|          8 | Ervilha          |   15.50 |    90 | Quero      |            4 | g              |
+|          9 | Presunto         |   14.98 |    90 | Perdigão   |            5 | kg             |
+|         10 | Mortadela        |   10.90 |    74 | Sadia      |            5 | kg             |
+|         11 | Costela bovina   |   40.99 |    30 | Friboi     |            6 | kg             |
+|         12 | Asa de Frango    |   45.70 |    45 | Swift      |            6 | kg             |
+|         13 | Celular          | 1200.89 |    15 | Samsung    |            8 | un             |
+|         14 | Fone de ouvido   |   70.67 |    37 | Motorola   |            8 | un             |
+|         15 | Pão francês      |    3.77 |    50 | Superpan   |            9 | un             |
+|         16 | Sanduíche        |   15.99 |    20 | Superpan   |            9 | un             |
+|         17 | EGEO             |  200.89 |    20 | Oboticário |           10 | un             |
+|         18 | Lily             | 1000.89 |    10 | Oboticário |           10 | un             |
+|         19 | Refrigerante     |   16.50 |   100 | Coca-cola  |           11 | l              |
+|         20 | Suco de uva      |   20.50 |   100 | Maratá     |           11 | l              |
++------------+------------------+---------+-------+------------+--------------+----------------+
+20 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select nome, preco from produtos;
++------------------+---------+
+| nome             | preco   |
++------------------+---------+
+| Escova de dentes |   12.00 |
+| Sabão em pó      |   30.50 |
+| Detergente       |    3.55 |
+| Iogurte          |   19.99 |
+| Manteiga         |   30.50 |
+| Creme dental     |   29.99 |
+| Milho verde      |   19.50 |
+| Ervilha          |   15.50 |
+| Presunto         |   14.98 |
+| Mortadela        |   10.90 |
+| Costela bovina   |   40.99 |
+| Asa de Frango    |   45.70 |
+| Celular          | 1200.89 |
+| Fone de ouvido   |   70.67 |
+| Pão francês      |    3.77 |
+| Sanduíche        |   15.99 |
+| EGEO             |  200.89 |
+| Lily             | 1000.89 |
+| Refrigerante     |   16.50 |
+| Suco de uva      |   20.50 |
++------------------+---------+
+20 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select * from produtos where marca= 'Sadia';
++------------+-----------+-------+-------+-------+--------------+----------------+
+| id_produto | nome      | preco | quant | marca | id_categoria | unidade_medida |
++------------+-----------+-------+-------+-------+--------------+----------------+
+|         10 | Mortadela | 10.90 |    74 | Sadia |            5 | kg             |
++------------+-----------+-------+-------+-------+--------------+----------------+
+1 row in set (0.000 sec)
+
+MariaDB [etecmcm2]> select * from produtos where preco > 20;
++------------+----------------+---------+-------+------------+--------------+----------------+
+| id_produto | nome           | preco   | quant | marca      | id_categoria | unidade_medida |
++------------+----------------+---------+-------+------------+--------------+----------------+
+|          2 | Sabão em pó    |   30.50 |    50 | OMO        |            3 | un             |
+|          5 | Manteiga       |   30.50 |    80 | Batavo     |            1 | kg             |
+|          6 | Creme dental   |   29.99 |    80 | Sorriso    |            2 | un             |
+|         11 | Costela bovina |   40.99 |    30 | Friboi     |            6 | kg             |
+|         12 | Asa de Frango  |   45.70 |    45 | Swift      |            6 | kg             |
+|         13 | Celular        | 1200.89 |    15 | Samsung    |            8 | un             |
+|         14 | Fone de ouvido |   70.67 |    37 | Motorola   |            8 | un             |
+|         17 | EGEO           |  200.89 |    20 | Oboticário |           10 | un             |
+|         18 | Lily           | 1000.89 |    10 | Oboticário |           10 | un             |
+|         20 | Suco de uva    |   20.50 |   100 | Maratá     |           11 | l              |
++------------+----------------+---------+-------+------------+--------------+----------------+
+10 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select * from produtos where quant <= 60;
++------------+----------------+---------+-------+------------+--------------+----------------+
+| id_produto | nome           | preco   | quant | marca      | id_categoria | unidade_medida |
++------------+----------------+---------+-------+------------+--------------+----------------+
+|          2 | Sabão em pó    |   30.50 |    50 | OMO        |            3 | un             |
+|          3 | Detergente     |    3.55 |    10 | Ypê        |            3 | un             |
+|          4 | Iogurte        |   19.99 |    40 | Itambé     |            1 | kg             |
+|         11 | Costela bovina |   40.99 |    30 | Friboi     |            6 | kg             |
+|         12 | Asa de Frango  |   45.70 |    45 | Swift      |            6 | kg             |
+|         13 | Celular        | 1200.89 |    15 | Samsung    |            8 | un             |
+|         14 | Fone de ouvido |   70.67 |    37 | Motorola   |            8 | un             |
+|         15 | Pão francês    |    3.77 |    50 | Superpan   |            9 | un             |
+|         16 | Sanduíche      |   15.99 |    20 | Superpan   |            9 | un             |
+|         17 | EGEO           |  200.89 |    20 | Oboticário |           10 | un             |
+|         18 | Lily           | 1000.89 |    10 | Oboticário |           10 | un             |
++------------+----------------+---------+-------+------------+--------------+----------------+
+11 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select nome, preco from produtos order by preco asc limit 5;
++------------------+-------+
+| nome             | preco |
++------------------+-------+
+| Detergente       |  3.55 |
+| Pão francês      |  3.77 |
+| Mortadela        | 10.90 |
+| Escova de dentes | 12.00 |
+| Presunto         | 14.98 |
++------------------+-------+
+5 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select nome, preco from produtos order by preco desc limit 5;
++----------------+---------+
+| nome           | preco   |
++----------------+---------+
+| Celular        | 1200.89 |
+| Lily           | 1000.89 |
+| EGEO           |  200.89 |
+| Fone de ouvido |   70.67 |
+| Asa de Frango  |   45.70 |
++----------------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [etecmcm2]> select count(*) as total_produtos from produtos;
++----------------+
+| total_produtos |
++----------------+
+|             20 |
++----------------+
+1 row in set (0.001 sec)
+
+MariaDB [etecmcm2]> select avg(preco) as preco_medio from produtos;
++-------------+
+| preco_medio |
++-------------+
+|  140.210000 |
++-------------+
+1 row in set (0.000 sec)
+
+MariaDB [etecmcm2]> select nome, quant from produtos order by quant desc limit 1;
++------------------+-------+
+| nome             | quant |
++------------------+-------+
+| Escova de dentes |   100 |
++------------------+-------+
+1 row in set (0.000 sec)
+
+MariaDB [etecmcm2]> select p.nome, c.nome_cat from produtos p join categorias c on p.id_categoria = c.id_categoria;
++------------------+-------------+
+| nome             | nome_cat    |
++------------------+-------------+
+| Iogurte          | Laticínios  |
+| Manteiga         | Laticínios  |
+| Escova de dentes | Higiene     |
+| Creme dental     | Higiene     |
+| Sabão em pó      | Limpeza     |
+| Detergente       | Limpeza     |
+| Milho verde      | Enlatados   |
+| Ervilha          | Enlatados   |
+| Presunto         | Frios       |
+| Mortadela        | Frios       |
+| Costela bovina   | Açougue     |
+| Asa de Frango    | Açougue     |
+| Celular          | Eletrônicos |
+| Fone de ouvido   | Eletrônicos |
+| Pão francês      | Padaria     |
+| Sanduíche        | Padaria     |
+| EGEO             | Perfumaria  |
+| Lily             | Perfumaria  |
+| Refrigerante     | Bebidas     |
+| Suco de uva      | Bebidas     |
++------------------+-------------+
+20 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select p.nome, p.marca, p.preco from produtos p join categorias c on p.id_categoria = c.id_categoria where c.nome_cat = 'Laticínios';
++----------+--------+-------+
+| nome     | marca  | preco |
++----------+--------+-------+
+| Iogurte  | Itambé | 19.99 |
+| Manteiga | Batavo | 30.50 |
++----------+--------+-------+
+2 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select c.nome_cat, count(*) as total_produtos from produtos p join categorias c on p.id_categoria = c.id_categoria group by c.nome_cat;
++-------------+----------------+
+| nome_cat    | total_produtos |
++-------------+----------------+
+| Açougue     |              2 |
+| Bebidas     |              2 |
+| Eletrônicos |              2 |
+| Enlatados   |              2 |
+| Frios       |              2 |
+| Higiene     |              2 |
+| Laticínios  |              2 |
+| Limpeza     |              2 |
+| Padaria     |              2 |
+| Perfumaria  |              2 |
++-------------+----------------+
+10 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select * from produtos where preco between 10 and 20;
++------------+------------------+-------+-------+-----------+--------------+----------------+
+| id_produto | nome             | preco | quant | marca     | id_categoria | unidade_medida |
++------------+------------------+-------+-------+-----------+--------------+----------------+
+|          1 | Escova de dentes | 12.00 |   100 | Colgate   |            2 | un             |
+|          4 | Iogurte          | 19.99 |    40 | Itambé    |            1 | kg             |
+|          7 | Milho verde      | 19.50 |   100 | Quero     |            4 | g              |
+|          8 | Ervilha          | 15.50 |    90 | Quero     |            4 | g              |
+|          9 | Presunto         | 14.98 |    90 | Perdigão  |            5 | kg             |
+|         10 | Mortadela        | 10.90 |    74 | Sadia     |            5 | kg             |
+|         16 | Sanduíche        | 15.99 |    20 | Superpan  |            9 | un             |
+|         19 | Refrigerante     | 16.50 |   100 | Coca-cola |           11 | l              |
++------------+------------------+-------+-------+-----------+--------------+----------------+
+8 rows in set (0.000 sec)
+
+MariaDB [etecmcm2]> select * from produtos where nome like '%E';
++------------+--------------+-------+-------+-----------+--------------+----------------+
+| id_produto | nome         | preco | quant | marca     | id_categoria | unidade_medida |
++------------+--------------+-------+-------+-----------+--------------+----------------+
+|          3 | Detergente   |  3.55 |    10 | Ypê       |            3 | un             |
+|          4 | Iogurte      | 19.99 |    40 | Itambé    |            1 | kg             |
+|          7 | Milho verde  | 19.50 |   100 | Quero     |            4 | g              |
+|         16 | Sanduíche    | 15.99 |    20 | Superpan  |            9 | un             |
+|         19 | Refrigerante | 16.50 |   100 | Coca-cola |           11 | l              |
++------------+--------------+-------+-------+-----------+--------------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [etecmcm2]> select * from produtos where nome like 'E%';
++------------+------------------+--------+-------+------------+--------------+----------------+
+| id_produto | nome             | preco  | quant | marca      | id_categoria | unidade_medida |
++------------+------------------+--------+-------+------------+--------------+----------------+
+|          1 | Escova de dentes |  12.00 |   100 | Colgate    |            2 | un             |
+|          8 | Ervilha          |  15.50 |    90 | Quero      |            4 | g              |
+|         17 | EGEO             | 200.89 |    20 | Oboticário |           10 | un             |
++------------+------------------+--------+-------+------------+--------------+----------------+
+3 rows in set (0.000 sec)
+
+MariaDB [etecmcm2]> select distinct marca from produtos;
++------------+
+| marca      |
++------------+
+| Colgate    |
+| OMO        |
+| Ypê        |
+| Itambé     |
+| Batavo     |
+| Sorriso    |
+| Quero      |
+| Perdigão   |
+| Sadia      |
+| Friboi     |
+| Swift      |
+| Samsung    |
+| Motorola   |
+| Superpan   |
+| Oboticário |
+| Coca-cola  |
+| Maratá     |
++------------+
+17 rows in set (0.001 sec)
